@@ -1,0 +1,94 @@
+﻿@{
+    string _classSearch = Session["idEventList"] == null ? "search" : "filterListEventsProducts";
+}
+<div class="ui container fluid _header">
+    <div class="ui container">
+        <div class="ui middle aligned three column centered grid">
+            <div class="row">
+                <div class="ui seven wide mobile four wide tablet five wide computer column">
+                    <a href="/Home" title="Página Inicial">
+                        <img class="ui middle aligned image logo" src="/assets/image/logo/logo_projestart_300.png" alt="@LojaCorp.Control.Company._Company.FantasyName" title="@LojaCorp.Control.Company._Company.FantasyName">
+                    </a>
+                </div>
+                <div class="ui center aligned seven wide tablet seven wide computer column searchcolumn">
+                    <div class="ui category @_classSearch">
+                        <div class="ui icon input fluid">
+                            <input class="prompt" type="text" placeholder="O que você está procurando?">
+                            <i class="search icon"></i>
+                        </div>
+                        <div class="results"></div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="ui nine wide mobile four wide tablet four wide computer column" id="customerBag">
+                        @if (Session["UserAuthenticated"] == null || (Convert.ToBoolean(Session["Guest"]) == true))
+                        {
+                            <div class="item" style="float: left;line-height: 36px;">
+                                <a href="/customer" title="Área do Cliente">
+                                    <i class="user icon regular"></i>
+                                
+                                
+                                        <span class="text mobile-hide">Entrar</span>
+                                </a>
+                            </div>
+                        }
+                        @if ((Session["UserAuthenticated"] != null) && (Convert.ToBoolean(Session["Guest"]) == false))
+                        {
+                            var userAuthenticated = (DomainCustomer.Entities.Customer)Session["UserAuthenticated"];
+
+                            Char delimiter = ' ';
+                            String[] nickName = userAuthenticated.Name.Split(delimiter);
+
+                            <div class="ui inline item dropdown pointing top right">
+                                <div class="text regular black">
+                                    <i class="user icon regular"></i>
+                                    <span class="text">Olá <span id="userNameCommon">@nickName[0]</span></span>
+                                </div>
+                                <div class="menu">
+                                    <a href="/customer" class="item" title="Minha Conta"><i class="options icon"></i>Minha Conta</a>
+                                    <a href="/order" class="item" title="Meus Pedidos"><i class="shopping bag icon"></i>Meus Pedidos</a>
+                                    <a href="/customer/logout" class="item" title="Sair"><i class="sign out icon"></i>Sair</a>
+                                </div>
+                            </div>
+                        }
+                       @Html.Action("B2BIsActived", "Company", null) 
+
+
+                    <div id="cartButton" class="ui cartbutton mini-cart" tabindex="0" data-segment="@(Session["segment"] != null ? Session["segment"] : "b2c")">
+                        <i class="cart icon"></i>
+                        <span class="mobile-hide">@(Session["idEventList"] == null && Session["EventList"] == null ? "" : "")</span>
+                        <span id="total_itens_card">
+                            @{
+                                if (Session["EventList"] == null)
+                                {
+                                    @Html.Action("TotalItensCart", "Checkout")
+                                }
+                                else
+                                {
+                                    @Html.Action("TotalItensList", "EventList")
+                                }
+                            }
+                        </span>
+                    </div>
+                    <div class="ui searchMobile mobile only">
+                        <div class="ui button icon centered">
+                            <i class="search icon"></i>
+                        </div>
+                        <div class="ui blocoBusca @_classSearch">
+                            <div class="ui icon input fluid">
+                                <input class="prompt" type="text" placeholder="Buscar...">
+                                <i class="search icon"></i>
+                            </div>
+                            <div class="results"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,22 @@
+﻿@model IList<DomainCompany.Entities.Banner>
+@if (Model != null && Model.Any())
+{
+<div class="ui container">
+    <div class="ui grid">
+        <div class="row one column">
+            <div class="column">
+                <div class="ui images text center left grid-banners  middle aligned center aligned">
+                    @{
+                        foreach (var banner in Model)
+                        {
+                            <a href="@banner.Link" title="@banner.Name">
+                                <img src="/assets/image/img_default.png" data-src="@banner.NameFileImage" alt="@banner.Name" title="@banner.Name" class="ui image" onerror="imgError(this)">
+                            </a>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                        }

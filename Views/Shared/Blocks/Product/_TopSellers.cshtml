@@ -1,0 +1,33 @@
+﻿@model DomainProduct.Result
+@if (Model != null && Model.Products.Any())
+{
+    <div class="ui container topsellers">
+        <div class="ui horizontal divider">
+            Mais Vendidos
+        </div>
+                
+        <div class="ui grid">
+            <div class="ui column cards centered car-maisvendidos slideshow">
+                
+                @{
+                    var contador = 0;
+                    foreach (var product in Model.Products)
+                    {
+                        <!-- Page: ~/Views/Shared/Object/Product/_ProductInCard.cshtml -->
+                        @Html.Partial("~/Views/Shared/Object/Product/_ProductInCard.cshtml", product)
+                        
+                        contador++;
+
+                        if (contador >= 6)
+                        {
+                            break;
+                        }
+                    }
+                }
+                
+
+            </div>
+        </div>
+        <div class="ui divider hidden"></div>
+    </div>
+}
